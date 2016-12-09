@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="600" Width="800">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New"
+                        Executed="NewDocument" />
+                                <CommandBinding Command="ApplicationCommands.Open"
+                        Executed="OpenDocument" />
+                                <CommandBinding Command="ApplicationCommands.Save"
+                        Executed="SaveDocument" CanExecute="SaveDocument_CanExecute"/>
+                                <CommandBinding Command="ApplicationCommands.SaveAs"
+                        Executed="SaveDocumentAs" />
+                                <CommandBinding Command="ApplicationCommands.Close"
+                        Executed="ApplicationClose" />
+        <CommandBinding Command="Print" Executed="PrintDocument"/>
+        <CommandBinding Command="PrintPreview" Executed="PrintPreview"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <MouseBinding  Gesture="Control+WheelClick" Command="SaveAs"/>
+        <KeyBinding Key="S" Modifiers="Shift+Alt" Command="SaveAs" />
+        <KeyBinding Key="S" Modifiers="Shift" Command="SaveAs" />
+    </Window.InputBindings>
+    <DockPanel>
+        <local:TextEditorMenu x:Name="menu" DockPanel.Dock="Top" />
+        <local:TextEditorToolbar x:Name="toolbar" DockPanel.Dock="Top" ComboBox.SelectionChanged="TextEditorToolbar_SelectionChanged" />
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock x:Name="status" />
+        </StatusBar>
+        <RichTextBox x:Name="body"
+                     SelectionChanged="body_SelectionChanged"
+                        SpellCheck.IsEnabled="True"
+                        AcceptsReturn="True"
+                        AcceptsTab="True"
+                        BorderThickness="0 2 0 0" />
+    </DockPanel>
 </Window>
